@@ -5,25 +5,8 @@ class CurrencyScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      child: ref.watch(currencyListProvider).when(
-            data: (data) => _CurrencyBody(data),
-            error: (error, stackTrace) => Center(
-              child: Text(error.toString()),
-            ),
-            loading: () => const LoaderBody(),
-          ),
-    );
-  }
-}
+    final list = ref.watch(currencyListProvider).requireValue;
 
-class _CurrencyBody extends StatelessWidget {
-  const _CurrencyBody(this.list, {super.key});
-
-  final List<Currency> list;
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: [
         const _CurrencyTitle(),
@@ -50,10 +33,9 @@ class _CurrencyTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // contentPadding: ,
-      // leading: const SizedBox(
-      //   width: WidgetStyle.p32,
-      // ),
+      leading: const SizedBox(
+        width: WidgetStyle.p32,
+      ),
       title: Row(
         children: [
           Text(

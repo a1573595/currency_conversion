@@ -1,3 +1,4 @@
+import 'package:currency_conversion/src/data/local/object_box_help.dart';
 import 'package:currency_conversion/src/ui/l10n/l10n.dart';
 import 'package:currency_conversion/src/ui/screen/home_view_model.dart';
 import 'package:currency_conversion/src/ui/style/widget_style.dart';
@@ -6,6 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await ObjectBoxHelp.init();
 
   runApp(const ProviderScope(
     child: CurrencyApp(),
@@ -38,4 +41,3 @@ class CurrencyApp extends StatelessWidget {
     );
   }
 }
-

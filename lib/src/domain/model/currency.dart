@@ -1,12 +1,17 @@
 import 'package:currency_conversion/src/data/model/latest_currency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class Currency with EquatableMixin {
+  @Id()
+  int id;
   final String code;
   final String flagImage;
   final double twdPrice;
 
   Currency({
+    this.id = 0,
     required this.code,
     required this.flagImage,
     required this.twdPrice,

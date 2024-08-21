@@ -8,9 +8,9 @@ class HomeScreen extends HookConsumerWidget {
     final controller = usePageController();
 
     final pageList = useMemoized(() => const [
-      CurrencyScreen(),
-      ConvertScreen(),
-    ]);
+          CurrencyScreen(),
+          ConvertScreen(),
+        ]);
 
     ref.listen(pagePositionProvider, (previous, next) {
       controller.jumpToPage(next);
@@ -18,12 +18,20 @@ class HomeScreen extends HookConsumerWidget {
 
     return TwicePopScope(
       child: Scaffold(
-        body: PageView.builder(
-          controller: controller,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: pageList.length,
-          itemBuilder: (context, index) => pageList[index],
-        ),
+        body: ref.watch(currencyListProvider).when(
+              data: (data) => SafeArea(
+                child: PageView.builder(
+                  controller: controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: pageList.length,
+                  itemBuilder: (context, index) => pageList[index],
+                ),
+              ),
+              error: (error, stackTrace) => Center(
+                child: Text(error.toString()),
+              ),
+              loading: () => const LoaderBody(),
+            ),
         bottomNavigationBar: const _BottomNavigationBar(),
       ),
     );

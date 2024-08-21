@@ -43,6 +43,9 @@ dependencies:
   freezed_annotation: ^2.4.2
   hooks_riverpod: ^2.5.1
   json_annotation: ^4.9.0
+  objectbox: ^4.0.2
+  objectbox_flutter_libs: any
+  path_provider: ^2.1.2
   pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
@@ -54,7 +57,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   freezed: ^2.5.2
   json_serializable: ^6.8.0
-  path_provider: ^2.1.2
+  objectbox_generator: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -98,3 +101,10 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   generate: true
+objectbox:
+  # Writes objectbox-model.json and objectbox.g.dart to lib/custom (and test/custom).
+  output_dir: src/data/local
+  # Or optionally specify the lib and test output folder separately.
+  # output_dir:
+  #   lib: custom
+  #   test: other

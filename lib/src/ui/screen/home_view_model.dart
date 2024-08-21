@@ -25,11 +25,11 @@ part 'convert_screen.dart';
 
 final pagePositionProvider = StateProvider.autoDispose<int>((ref) => 0);
 
-final currencyListProvider = FutureProvider.autoDispose<List<Currency>>((ref) {
+final currencyListProvider = StreamProvider.autoDispose<List<Currency>>((ref) {
   final cancelToken = CancelToken();
   ref.onDispose(() => cancelToken.cancel());
 
-  return ref.read(currencyRepository).getCurrencyListBaseTWD(cancelToken: cancelToken);
+  return ref.read(currencyRepository).getCurrencyList(cancelToken: cancelToken);
 });
 
 final convertUiStateProvider =
@@ -41,6 +41,14 @@ class ConvertUiStateNotifier extends AutoDisposeNotifier<ConvertUiState> {
 
   @override
   ConvertUiState build() {
+    ref.listen(currencyListProvider, (previous, next) {
+      final list = next.requireValue;
+      final fromCurrency = list.firstWhere((e) => e.code == state.fromCurrency.code);
+      final toCurrency = list.firstWhere((e) => e.code == state.toCurrency.code);
+
+      _calculateRateDecimal(fromCurrency: fromCurrency, toCurrency: toCurrency);
+    });
+
     final list = ref.read(currencyListProvider.select((value) => value.requireValue));
 
     return ConvertUiState.byDefault(currency: list.first);

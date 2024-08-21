@@ -5,23 +5,6 @@ class ConvertScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      child: ref.watch(currencyListProvider).when(
-            data: (data) => const _ConvertBody(),
-            error: (error, stackTrace) => Center(
-              child: Text(error.toString()),
-            ),
-            loading: () => const LoaderBody(),
-          ),
-    );
-  }
-}
-
-class _ConvertBody extends StatelessWidget {
-  const _ConvertBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
@@ -159,11 +142,11 @@ class _CurrencyCard extends HookConsumerWidget {
     final children = useMemoized(() => {for (final i in ref.read(currencyListProvider).requireValue) i: i.code});
 
     final onTap = useCallback(
-            () => showPickerSheet(context, children: children, initialValue: currency).then((value) {
-          if (value != null) {
-            onChanged(value);
-          }
-        }),
+        () => showPickerSheet(context, children: children, initialValue: currency).then((value) {
+              if (value != null) {
+                onChanged(value);
+              }
+            }),
         [currency]);
 
     return InkWell(
