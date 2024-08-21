@@ -19,7 +19,7 @@ class CurrencyScreen extends ConsumerWidget {
             ),
             physics: const BouncingScrollPhysics(),
             itemCount: list.length,
-            itemBuilder: (context, index) => _CurrencyItem(list[index]),
+            itemBuilder: (context, index) => _CurrencyItem(key: ValueKey(list[index].code), list[index]),
           ),
         ),
       ],

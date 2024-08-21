@@ -1,6 +1,6 @@
 # exchange_app
 
-A Flutter exchange app.
+A Flutter currency conversion app.
 
 ## Screenshots
 
