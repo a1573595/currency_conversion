@@ -1,5 +1,5 @@
-import 'package:currency_conversion/src/ui/screen/home_view_model.dart';
-
+import 'package:currency_conversion/ui/app_keys.dart';
+import 'package:currency_conversion/ui/screen/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,42 +12,44 @@ void main() async {
 
   group("Home screen test", () {
     testWidgets("Loading data", (widgetTester) async {
-      await widgetTester.pumpWidget(buildTestWidget(
-        overrides: [
-          currencyListProvider.overrideWith((ref) => const Stream.empty()),
-        ],
-        widget: const HomeScreen(),
-      ));
+      await widgetTester.pumpWidget(
+        buildTestWidget(
+          overrides: [currencyListProvider.overrideWith((ref) => const Stream.empty())],
+          widget: const HomeScreen(),
+        ),
+      );
 
-      final circularProgressIndicator =
-      find.descendant(of: find.byType(Center), matching: find.byType(CircularProgressIndicator));
+      final circularProgressIndicator = find.descendant(
+        of: find.byType(Center),
+        matching: find.byType(CircularProgressIndicator),
+      );
       expect(circularProgressIndicator, findsOneWidget);
     });
 
     testWidgets("Load data failed", (widgetTester) async {
-      await widgetTester.pumpWidget(buildTestWidget(
-        overrides: [
-          currencyListProvider.overrideWith((ref) => Stream.fromFuture(Future.delayed(Duration.zero))),
-        ],
-        widget: const HomeScreen(),
-      ));
+      await widgetTester.pumpWidget(
+        buildTestWidget(
+          overrides: [currencyListProvider.overrideWith((ref) => Stream.fromFuture(Future.delayed(Duration.zero)))],
+          widget: const HomeScreen(),
+        ),
+      );
 
       final errorText = find.descendant(of: find.byType(Center), matching: find.byType(Text));
       expect(errorText, findsOneWidget);
     });
 
     testWidgets("BottomNavigationBar change page", (widgetTester) async {
-      await widgetTester.pumpWidget(buildTestWidget(
-        overrides: [
-          currencyListProvider.overrideWith((ref) => Stream.value(list)),
-        ],
-        widget: const HomeScreen(),
-      ));
+      await widgetTester.pumpWidget(
+        buildTestWidget(
+          overrides: [currencyListProvider.overrideWith((ref) => Stream.value(list))],
+          widget: const HomeScreen(),
+        ),
+      );
       await widgetTester.pump();
 
       final bnb = find.byType(BottomNavigationBar);
-      final bnbItemCurrency = find.descendant(of: bnb, matching: find.text("Currency"));
-      final bnbItemConvert = find.descendant(of: bnb, matching: find.text("Convert"));
+      final bnbItemCurrency = find.byKey(AppKeys.currencyTab);
+      final bnbItemConvert = find.byKey(AppKeys.convertTab);
 
       expect(bnb, findsOneWidget);
       expect(bnbItemCurrency, findsOneWidget);
@@ -63,16 +65,15 @@ void main() async {
     });
 
     testWidgets("BottomNavigationBar change to second page", (widgetTester) async {
-      await widgetTester.pumpWidget(buildTestWidget(
-        overrides: [
-          currencyListProvider.overrideWith((ref) => Stream.value(list)),
-        ],
-        widget: const HomeScreen(),
-      ));
+      await widgetTester.pumpWidget(
+        buildTestWidget(
+          overrides: [currencyListProvider.overrideWith((ref) => Stream.value(list))],
+          widget: const HomeScreen(),
+        ),
+      );
       await widgetTester.pump();
 
-      final bnb = find.byType(BottomNavigationBar);
-      final bnbItemConvert = find.descendant(of: bnb, matching: find.text("Convert"));
+      final bnbItemConvert = find.byKey(AppKeys.convertTab);
 
       final element = widgetTester.element(find.byType(HomeScreen));
       final container = ProviderScope.containerOf(element);

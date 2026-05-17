@@ -1,1 +1,2 @@
-arb-dir: lib/src/ui/l10n
+arb-dir: lib/common/l10n
+output-dir: lib/common/l10n

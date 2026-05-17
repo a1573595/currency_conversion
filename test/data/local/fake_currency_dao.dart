@@ -1,5 +1,5 @@
-import 'package:currency_conversion/src/domain/local/currency_dao.dart';
-import 'package:currency_conversion/src/domain/model/currency.dart';
+import 'package:currency_conversion/domain/local/currency_dao.dart';
+import 'package:currency_conversion/domain/model/currency.dart';
 
 import '../../source/fake_data_source.dart';
 

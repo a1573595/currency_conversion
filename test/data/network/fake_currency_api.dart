@@ -1,5 +1,5 @@
-import 'package:currency_conversion/src/data/model/latest_currency.dart';
-import 'package:currency_conversion/src/domain/network/currency_api.dart';
+import 'package:currency_conversion/data/model/latest_currency.dart';
+import 'package:currency_conversion/domain/network/currency_api.dart';
 import 'package:dio/src/cancel_token.dart';
 
 import '../../source/fake_data_source.dart';

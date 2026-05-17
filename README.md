@@ -12,24 +12,37 @@ A Flutter currency conversion app.
 ## Build Model
 
 ```
-dart run build_runner build --delete-conflicting-outputs
+fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
 ## Generate Localization
 
 ```
-flutter gen-l10n
+fvm flutter gen-l10n
 ```
 
 ## Run Project
 
 ```
-flutter pub get
-flutter run
+fvm flutter pub get
+fvm flutter run --dart-define=CURRENCY_API_KEY=your_api_key
 ```
 
 ## Test
 
+Analyze and run unit/widget tests:
+
 ```
-flutter test
+fvm dart analyze
+fvm flutter test test
+```
+
+Run offline integration tests with fake API responses:
+
+```
+# Android emulator
+fvm flutter test integration_test/app_test.dart -d emulator-5554 --dart-define=CURRENCY_API_KEY=
+
+# iOS simulator. Replace the id with the simulator id from `fvm flutter devices`.
+fvm flutter test integration_test/app_test.dart -d <ios-simulator-device-id> --dart-define=CURRENCY_API_KEY=
 ```

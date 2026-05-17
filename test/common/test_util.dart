@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:currency_conversion/src/ui/l10n/l10n.dart';
+import 'package:currency_conversion/common/l10n/app_localizations.dart';
+import 'package:currency_conversion/common/l10n/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/misc.dart';
 import 'package:path/path.dart' as path;
 
 Future<Directory> getHiveTempDir() async {
@@ -26,35 +27,25 @@ ProviderContainer createContainer({
   List<Override> overrides = const [],
   List<ProviderObserver>? observers,
 }) {
-  final container = ProviderContainer(
-    parent: parent,
-    overrides: overrides,
-    observers: observers,
-  );
+  final container = ProviderContainer(parent: parent, overrides: overrides, observers: observers);
 
   addTearDown(container.dispose);
 
   return container;
 }
 
-Widget buildTestWidget({
-  required Widget widget,
-  List<Override> overrides = const [],
-}) =>
-    ProviderScope(
-      overrides: overrides,
-      child: MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Builder(
-          builder: (context) {
-            final appLocalizations = AppLocalizations.of(context)!;
-            L10n.init(appLocalizations);
+Widget buildTestWidget({required Widget widget, List<Override> overrides = const []}) => ProviderScope(
+  overrides: overrides,
+  child: MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: Builder(
+      builder: (context) {
+        final appLocalizations = AppLocalizations.of(context)!;
+        L10n.init(appLocalizations);
 
-            return Material(
-              child: widget,
-            );
-          },
-        ),
-      ),
-    );
+        return Material(child: widget);
+      },
+    ),
+  ),
+);
